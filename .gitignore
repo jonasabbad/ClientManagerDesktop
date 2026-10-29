@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Build output (electron-vite) and installers (electron-builder)
+out/
+dist/
+
+# Logs, local env and OS files
+*.log
+.env
+.env.*
+.DS_Store
+Thumbs.db
+
+# SQLite databases must never be committed
+*.db
+*.db-shm
+*.db-wal

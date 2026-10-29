@@ -1,0 +1,48 @@
+appId: com.agency.client-manager
+productName: Client Manager
+copyright: Copyright © 2026 Agency CMS
+
+directories:
+  buildResources: build
+  output: dist
+
+files:
+  - out/**/*
+
+# Auto-update feed. electron-builder writes this into resources/app-update.yml
+# of every build, and uploads the installer + latest.yml + .blockmap to the
+# GitHub Release v<version>. The repository's releases must be public: the
+# installed app downloads them anonymously (no token is shipped).
+publish:
+  provider: github
+  owner: jonasabbad
+  repo: ClientManagerDesktop
+  releaseType: release
+
+win:
+  target:
+    # NSIS is the auto-updatable target.
+    - target: nsis
+      arch:
+        - x64
+    # Portable build is kept for convenience but cannot auto-update.
+    - target: portable
+      arch:
+        - x64
+  icon: build/icon.png
+
+nsis:
+  # No spaces: GitHub rewrites spaces in asset names, which would break the
+  # download URL recorded in latest.yml.
+  artifactName: Client-Manager-Setup-${version}.${ext}
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  # The SQLite database lives in %APPDATA%\Client Manager\data and must survive
+  # updates (which run the old uninstaller) and uninstalls.
+  deleteAppDataOnUninstall: false
+  shortcutName: "Client Manager"
+  guid: "8c947dfc-ea4e-5e3e-a107-1e5b2259163e"
+
+portable:
+  artifactName: Client-Manager-Portable-${version}.${ext}
